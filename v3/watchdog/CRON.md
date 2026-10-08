@@ -19,7 +19,7 @@
 
 读 `<安装目录>/channel-agent/heartbeat.json`（JSON：`{agent_id, ts}`，ts 为 epoch 秒）。
 
-- 如果文件不存在，或 `now - ts > 1200`（20 分钟）→ 用 subagent 拉起一个新的 channel agent，prompt 用 `channel-agent/PROMPT.md` 全文，把 agent ID 替换为一个随机值。
+- 如果文件不存在，或 `now - ts > 360`（6 分钟）→ 用 subagent 拉起一个新的 channel agent，prompt 用 `channel-agent/PROMPT.md` 全文，把 agent ID 替换为一个随机值。
 - 否则 → 正常，什么都不做。
 
 ## 3. 报告
