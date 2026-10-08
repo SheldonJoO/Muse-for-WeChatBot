@@ -23,6 +23,10 @@
    c. 读 `config.json` 的 `allowed_user_id`：如果非空且 `from_user` 与之不一致，移到 `processed/` 并跳过（静默忽略非绑定用户）
    d. 用中文写纯文本回复（规范见下），写入 `outbox/<msg_id>.json`：`{"to_user_id": from_user, "context_token": 原context_token, "text": 回复}`
    e. `mv processing/<msg_id>.json` → `processed/<msg_id>.json`
+f. 用 `chat.send_message` 往微信旁聊（ID 在看门狗配置里）同步一条记录，格式：
+   [微信 HH:MM] 用户：<原文>
+   [微信 HH:MM] 我回复：<回复>（已写入 outbox）
+   如果用户提出了任务，加一行：[微信任务] <任务描述>。同步失败不影响主流程。
 5. `sleep 15`，回到步骤 3。
 
 运行约 45 分钟后干净退出（不要恋战，让看门狗按心跳拉起新的，保持新鲜）。退出前最后更新一次心跳。
